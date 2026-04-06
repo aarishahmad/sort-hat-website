@@ -14,13 +14,13 @@ Built it to practice proper UI without relying on a framework. No React, no buil
 
 ## Screenshots
 
-![Hero](./public/screenshots/hero.png)
+![Hero](public/screenshots/hero.png)
 
-![Services](./public/screenshots/services.png)
+![Services](public/screenshots/services.png)
 
-![Pricing](./public/screenshots/pricing.png)
+![Pricing](public/screenshots/pricing.png)
 
-![Process & Reviews](./public/screenshots/process.png)
+![Process & Reviews](public/screenshots/process.png)
 
 ---
 
