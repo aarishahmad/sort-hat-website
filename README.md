@@ -14,7 +14,7 @@ Built it to practice proper UI without relying on a framework. No React, no buil
 
 ## Screenshots
 
-![Hero](public/screenshots/hero.png)
+![Hero](https://github.com/aarishahmad/sort-hat-website/blob/main/Screenshot%202026-04-06%20110001.png)
 
 ![Services](public/screenshots/services.png)
 
