@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SortHat — Resume & Career Writing Services</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Serif+Display:ital@0;1&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --bg2: #111111;
+    --bg3: #161616;
+    --accent: #c8f135;
+    --accent2: #f1c135;
+    --white: #f5f0e8;
+    --muted: #6b6b6b;
+    --border: rgba(255,255,255,0.08);
+    --card: #141414;
+    --font-display: 'DM Serif Display', serif;
+    --font-sans: 'Syne', sans-serif;
+    --font-mono: 'Space Mono', monospace;
+    --transition: cubic-bezier(0.16,1,0.3,1);
+  }
+
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; font-size: 16px; }
+  body { background: var(--bg); color: var(--white); font-family: var(--font-sans); overflow-x: hidden; }
+
+  ::-webkit-scrollbar { width: 3px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 1rem 5%;
+    display: flex; align-items: center; justify-content: space-between;
+    transition: background 0.4s, backdrop-filter 0.4s;
+  }
+  nav.scrolled {
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .logo {
+    font-family: var(--font-display); font-size: 1.8rem;
+    color: var(--white); letter-spacing: -0.03em;
+    display: flex; align-items: center; gap: 2px; line-height: 1;
+    text-decoration: none;
+  }
+  .logo .hat { color: var(--accent); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: var(--muted); text-decoration: none;
+    font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase;
+    font-family: var(--font-mono); transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-cta {
+    background: var(--accent); color: #000;
+    padding: 0.55rem 1.2rem; border-radius: 2px;
+    font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700;
+    text-decoration: none; letter-spacing: 0.05em;
+    transition: background 0.3s, transform 0.2s; border: none; cursor: pointer;
+    white-space: nowrap;
+  }
+  .nav-cta:hover { background: var(--accent2); transform: translateY(-1px); }
+  .nav-hamburger {
+    display: none; background: none; border: 1px solid var(--border);
+    color: var(--white); padding: 0.4rem 0.6rem; border-radius: 2px;
+    font-size: 1.1rem; cursor: pointer;
+  }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: flex-start;
+    padding: 6rem 5% 4rem;
+    position: relative; overflow: hidden;
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image: linear-gradient(var(--border) 1px, transparent 1px),
+                      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 60px 60px; opacity: 0.4; pointer-events: none;
+  }
+  .hero-glow {
+    position: absolute; top: -10%; right: -5%;
+    width: 55vw; height: 55vw;
+    background: radial-gradient(circle, rgba(200,241,53,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-tag {
+    font-family: var(--font-mono); font-size: 0.72rem;
+    color: var(--accent); letter-spacing: 0.18em; text-transform: uppercase;
+    border: 1px solid rgba(200,241,53,0.3);
+    padding: 0.38rem 0.9rem; border-radius: 2px; margin-bottom: 1.8rem;
+    opacity: 0; animation: fadeUp 0.8s 0.2s var(--transition) forwards;
+    width: fit-content; position: relative; z-index: 1;
+  }
+  .hero-headline {
+    font-family: var(--font-display);
+    font-size: clamp(2.8rem, 7vw, 6rem);
+    line-height: 1.0; letter-spacing: -0.03em;
+    max-width: 750px; position: relative; z-index: 1;
+    opacity: 0; animation: fadeUp 0.9s 0.4s var(--transition) forwards;
+  }
+  .hero-headline em { color: var(--accent); font-style: italic; }
+  .hero-sub {
+    font-size: 1rem; color: var(--muted);
+    max-width: 480px; line-height: 1.75;
+    margin-top: 1.5rem; position: relative; z-index: 1;
+    opacity: 0; animation: fadeUp 0.9s 0.6s var(--transition) forwards;
+  }
+  .hero-sub strong { color: var(--accent); font-weight: 600; }
+  .hero-actions {
+    display: flex; gap: 0.9rem; margin-top: 2.5rem; flex-wrap: wrap;
+    opacity: 0; animation: fadeUp 0.9s 0.8s var(--transition) forwards;
+    position: relative; z-index: 1;
+  }
+  .hero-stats {
+    display: flex; gap: 0; margin-top: 4rem;
+    border: 1px solid var(--border); border-radius: 4px; overflow: hidden;
+    position: relative; z-index: 1;
+    opacity: 0; animation: fadeUp 0.9s 1s var(--transition) forwards;
+    width: fit-content; max-width: 100%;
+  }
+  .stat-item {
+    padding: 1.1rem 2rem;
+    border-right: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-num {
+    font-family: var(--font-display); font-size: 2rem;
+    color: var(--accent); line-height: 1;
+  }
+  .stat-label {
+    font-family: var(--font-mono); font-size: 0.62rem;
+    color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase;
+    margin-top: 0.25rem;
+  }
+
+  /* BUTTONS */
+  .btn-primary {
+    background: var(--accent); color: #000;
+    padding: 0.85rem 1.8rem; border-radius: 2px;
+    font-family: var(--font-mono); font-size: 0.82rem; font-weight: 700;
+    text-decoration: none; letter-spacing: 0.05em; border: none; cursor: pointer;
+    transition: background 0.3s, transform 0.3s var(--transition), box-shadow 0.3s;
+    display: inline-block; white-space: nowrap;
+  }
+  .btn-primary:hover { background: var(--accent2); transform: translateY(-3px); box-shadow: 0 16px 36px rgba(200,241,53,0.2); }
+  .btn-outline {
+    background: transparent; color: var(--white);
+    padding: 0.85rem 1.8rem; border-radius: 2px;
+    font-family: var(--font-mono); font-size: 0.82rem;
+    text-decoration: none; letter-spacing: 0.05em;
+    border: 1px solid var(--border); cursor: pointer;
+    transition: border-color 0.3s, color 0.3s, transform 0.3s var(--transition);
+    display: inline-block; white-space: nowrap;
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-3px); }
+
+  /* SECTIONS */
+  section { padding: 6rem 5%; position: relative; }
+  .section-label {
+    font-family: var(--font-mono); font-size: 0.7rem;
+    color: var(--accent); letter-spacing: 0.2em; text-transform: uppercase;
+    margin-bottom: 1rem; display: flex; align-items: center; gap: 0.9rem;
+  }
+  .section-label::before { content:''; display:block; width:28px; height:1px; background:var(--accent); }
+  h2.section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4.5vw, 3.5rem);
+    line-height: 1.1; letter-spacing: -0.02em;
+  }
+  h2.section-title em { color: var(--accent); font-style: italic; }
+
+  /* SERVICES */
+  #services { background: var(--bg2); }
+  .services-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1.5px; margin-top: 3.5rem;
+    border: 1.5px solid var(--border); border-radius: 4px; overflow: hidden;
+  }
+  .service-card {
+    background: var(--card); padding: 2.2rem;
+    transition: background 0.3s; cursor: default;
+    position: relative; overflow: hidden;
+  }
+  .service-card::before {
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(135deg,rgba(200,241,53,0.04),transparent);
+    opacity:0; transition:opacity 0.4s;
+  }
+  .service-card:hover { background:#1a1a1a; }
+  .service-card:hover::before { opacity:1; }
+  .service-icon { font-size:1.6rem; margin-bottom:1.2rem; display:block; }
+  .service-card h3 { font-size:1rem; font-weight:700; margin-bottom:0.7rem; }
+  .service-card p { color:var(--muted); font-size:0.85rem; line-height:1.7; }
+  .service-tag {
+    display:inline-block; margin-top:1.2rem;
+    font-family:var(--font-mono); font-size:0.62rem;
+    color:var(--accent); border:1px solid rgba(200,241,53,0.25);
+    padding:0.22rem 0.6rem; border-radius:1px; letter-spacing:0.1em; text-transform:uppercase;
+  }
+  .service-num {
+    position:absolute; top:1.2rem; right:1.2rem;
+    font-family:var(--font-display); font-size:2.5rem;
+    color:rgba(255,255,255,0.04); pointer-events:none;
+  }
+
+  /* WHY US */
+  #why { background: var(--bg); }
+  .why-grid { display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center; margin-top:3.5rem; }
+  .why-list { list-style:none; }
+  .why-list li {
+    padding:1.4rem 0; border-bottom:1px solid var(--border);
+    display:flex; gap:1rem; align-items:flex-start;
+    opacity:0; transform:translateX(-20px);
+    transition:opacity 0.6s var(--transition), transform 0.6s var(--transition);
+  }
+  .why-list li.visible { opacity:1; transform:none; }
+  .why-icon {
+    width:34px; height:34px; background:rgba(200,241,53,0.1);
+    border-radius:2px; display:flex; align-items:center; justify-content:center;
+    flex-shrink:0; font-size:0.95rem; border:1px solid rgba(200,241,53,0.15);
+  }
+  .why-list li h4 { font-size:0.92rem; font-weight:700; margin-bottom:0.25rem; }
+  .why-list li p { color:var(--muted); font-size:0.82rem; line-height:1.6; }
+  .why-visual {
+    position:relative; border:1px solid var(--border);
+    border-radius:4px; overflow:hidden; aspect-ratio:4/3; background:var(--bg3);
+  }
+  .resume-preview {
+    padding:1.8rem; font-family:var(--font-mono); font-size:0.68rem;
+    color:var(--muted); line-height:1.9;
+  }
+  .rp-name { font-family:var(--font-display); font-size:1.3rem; color:var(--white); margin-bottom:0.15rem; }
+  .rp-role { color:var(--accent); font-size:0.6rem; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.8rem; }
+  .rp-section { margin-top:1rem; }
+  .rp-section-title { color:var(--accent); font-size:0.58rem; text-transform:uppercase; letter-spacing:0.15em; margin-bottom:0.35rem; border-bottom:1px solid rgba(200,241,53,0.2); padding-bottom:0.18rem; }
+  .rp-bar { height:3px; background:rgba(255,255,255,0.06); border-radius:2px; margin:0.3rem 0; overflow:hidden; }
+  .rp-bar-fill { height:100%; background:var(--accent); border-radius:2px; animation:barGrow 2s 1s var(--transition) both; }
+  .ats-badge {
+    position:absolute; top:0.9rem; right:0.9rem;
+    background:rgba(200,241,53,0.1); border:1px solid rgba(200,241,53,0.3);
+    color:var(--accent); font-family:var(--font-mono); font-size:0.58rem;
+    padding:0.22rem 0.55rem; border-radius:2px; letter-spacing:0.1em;
+  }
+  .scan-line {
+    position:absolute; left:0; right:0; height:2px;
+    background:linear-gradient(90deg,transparent,rgba(200,241,53,0.4),transparent);
+    animation:scan 3s linear infinite;
+  }
+
+  /* PRICING */
+  #pricing { background: var(--bg2); }
+  .pricing-intro { max-width: 600px; margin-bottom: 3.5rem; }
+  .pricing-intro p { color: var(--muted); margin-top: 1rem; line-height: 1.75; }
+  .pricing-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+  .plan-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 4px; padding: 2.2rem;
+    position: relative; overflow: hidden;
+    transition: transform 0.4s var(--transition), border-color 0.3s, box-shadow 0.4s;
+    cursor: default;
+  }
+  .plan-card:hover { transform: translateY(-6px); border-color: rgba(200,241,53,0.3); box-shadow: 0 32px 64px rgba(0,0,0,0.4); }
+  .plan-card.featured {
+    border-color: var(--accent);
+    background: linear-gradient(180deg, rgba(200,241,53,0.05), var(--card));
+  }
+  .plan-card.featured::before {
+    content:'MOST POPULAR';
+    position:absolute; top:0; left:0; right:0;
+    background:var(--accent); color:#000;
+    font-family:var(--font-mono); font-size:0.58rem; font-weight:700;
+    letter-spacing:0.15em; text-align:center; padding:0.35rem;
+  }
+  .plan-card.featured { padding-top:3.2rem; }
+  .plan-tier { font-family:var(--font-mono); font-size:0.62rem; color:var(--accent); letter-spacing:0.2em; text-transform:uppercase; margin-bottom:0.4rem; }
+  .plan-name { font-family:var(--font-display); font-size:1.7rem; letter-spacing:-0.02em; margin-bottom:0.45rem; }
+  .plan-desc { color:var(--muted); font-size:0.82rem; line-height:1.6; margin-bottom:1.6rem; }
+  .plan-price { display:flex; align-items:baseline; gap:0.25rem; margin-bottom:0.4rem; }
+  .plan-currency { font-family:var(--font-mono); font-size:0.9rem; color:var(--muted); }
+  .plan-amount { font-family:var(--font-display); font-size:2.6rem; line-height:1; letter-spacing:-0.03em; }
+  .plan-note { font-family:var(--font-mono); font-size:0.65rem; color:var(--muted); margin-bottom:0.3rem; }
+  .plan-note.accent { color:var(--accent); margin-bottom:1.5rem; }
+  .plan-features { list-style:none; margin-bottom:2rem; }
+  .plan-features li {
+    padding:0.55rem 0; font-size:0.82rem; color:var(--muted);
+    border-bottom:1px solid var(--border); display:flex; gap:0.65rem; align-items:center;
+  }
+  .plan-features li::before { content:'✓'; color:var(--accent); font-family:var(--font-mono); font-size:0.68rem; flex-shrink:0; }
+  .plan-features li.cross { color:rgba(255,255,255,0.2); }
+  .plan-features li.cross::before { content:'×'; color:rgba(255,255,255,0.15); }
+  .plan-cta {
+    width:100%; padding:0.85rem; border-radius:2px;
+    font-family:var(--font-mono); font-size:0.76rem; font-weight:700;
+    letter-spacing:0.05em; cursor:pointer; border:none;
+    transition:all 0.3s var(--transition);
+  }
+  .plan-cta.outline { background:transparent; color:var(--white); border:1px solid var(--border); }
+  .plan-cta.outline:hover { border-color:var(--accent); color:var(--accent); }
+  .plan-cta.filled { background:var(--accent); color:#000; }
+  .plan-cta.filled:hover { background:var(--accent2); transform:translateY(-2px); }
+
+  /* PROCESS */
+  #process { background: var(--bg); }
+  .process-steps { display:grid; grid-template-columns:repeat(4,1fr); gap:0; margin-top:3.5rem; position:relative; }
+  .process-steps::before {
+    content:''; position:absolute; top:27px; left:12.5%; right:12.5%;
+    height:1px; background:linear-gradient(90deg,var(--border),var(--accent),var(--border));
+  }
+  .process-step {
+    padding:0 1.5rem; text-align:center;
+    opacity:0; transform:translateY(30px);
+    transition:opacity 0.6s var(--transition),transform 0.6s var(--transition);
+  }
+  .process-step.visible { opacity:1; transform:none; }
+  .step-num {
+    width:54px; height:54px; border-radius:50%;
+    background:var(--bg3); border:2px solid var(--border);
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--font-mono); font-size:0.85rem; color:var(--accent);
+    margin:0 auto 1.3rem; position:relative; z-index:1;
+    transition:border-color 0.3s,background 0.3s;
+  }
+  .process-step:hover .step-num { border-color:var(--accent); background:rgba(200,241,53,0.1); }
+  .process-step h4 { font-size:0.88rem; font-weight:700; margin-bottom:0.4rem; }
+  .process-step p { color:var(--muted); font-size:0.78rem; line-height:1.6; }
+
+  /* REVIEWS */
+  #reviews { background: var(--bg2); overflow:hidden; }
+  .reviews-header { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:3.5rem; flex-wrap:wrap; gap:1.5rem; }
+  .reviews-track-wrapper { overflow:hidden; position:relative; }
+  .reviews-track-wrapper::before,.reviews-track-wrapper::after {
+    content:''; position:absolute; top:0; bottom:0; width:100px; z-index:1; pointer-events:none;
+  }
+  .reviews-track-wrapper::before { left:0; background:linear-gradient(90deg,var(--bg2),transparent); }
+  .reviews-track-wrapper::after { right:0; background:linear-gradient(-90deg,var(--bg2),transparent); }
+  .reviews-track { display:flex; gap:1.2rem; animation:marquee 40s linear infinite; width:max-content; }
+  .reviews-track:hover { animation-play-state:paused; }
+  .review-card {
+    background:var(--card); border:1px solid var(--border);
+    border-radius:4px; padding:1.8rem; width:300px; flex-shrink:0;
+    transition:border-color 0.3s,transform 0.3s var(--transition);
+  }
+  .review-card:hover { border-color:rgba(200,241,53,0.3); transform:translateY(-4px); }
+  .review-stars { display:flex; gap:3px; margin-bottom:0.9rem; font-size:0.72rem; color:var(--accent2); }
+  .review-text { color:var(--muted); font-size:0.83rem; line-height:1.7; margin-bottom:1.3rem; font-style:italic; }
+  .review-author { display:flex; align-items:center; gap:0.7rem; }
+  .review-avatar {
+    width:34px; height:34px; border-radius:50%; background:var(--bg3);
+    border:1px solid var(--border); display:flex; align-items:center; justify-content:center;
+    font-family:var(--font-display); font-size:0.85rem; color:var(--accent); flex-shrink:0;
+  }
+  .review-name { font-size:0.82rem; font-weight:700; }
+  .review-role { font-family:var(--font-mono); font-size:0.62rem; color:var(--muted); margin-top:0.1rem; }
+  .review-plan { margin-left:auto; font-family:var(--font-mono); font-size:0.58rem; color:var(--accent); border:1px solid rgba(200,241,53,0.2); padding:0.18rem 0.45rem; border-radius:1px; }
+
+  /* FOOTER */
+  footer {
+    background:var(--bg); border-top:1px solid var(--border);
+    padding:3rem 5%; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1.5rem;
+  }
+  .footer-brand { font-family:var(--font-display); font-size:1.4rem; display:flex; align-items:center; letter-spacing:-0.03em; }
+  .footer-brand .hat { color:var(--accent); }
+  .footer-links { display:flex; gap:1.8rem; list-style:none; flex-wrap:wrap; }
+  .footer-links a { color:var(--muted); text-decoration:none; font-family:var(--font-mono); font-size:0.72rem; letter-spacing:0.08em; transition:color 0.3s; }
+  .footer-links a:hover { color:var(--accent); }
+  .footer-copy { font-family:var(--font-mono); font-size:0.68rem; color:var(--muted); }
+
+  /* FORM PAGES */
+  .form-page {
+    display: none; min-height: 100vh;
+    padding: 5rem 5% 4rem; background: var(--bg);
+  }
+  .form-page.active { display: block; }
+  .form-container { max-width: 740px; margin: 0 auto; }
+  .back-btn {
+    background:none; border:1px solid var(--border); color:var(--muted);
+    padding:0.55rem 1.1rem; border-radius:2px; font-family:var(--font-mono);
+    font-size:0.72rem; cursor:pointer; margin-bottom:2rem;
+    transition:color 0.3s,border-color 0.3s; display:inline-block;
+  }
+  .back-btn:hover { color:var(--white); border-color:var(--white); }
+  .order-plan-badge {
+    display:inline-flex; align-items:center; gap:0.6rem;
+    background:rgba(200,241,53,0.08); border:1px solid rgba(200,241,53,0.2);
+    padding:0.45rem 0.9rem; border-radius:2px;
+    font-family:var(--font-mono); font-size:0.72rem; color:var(--accent);
+    margin-bottom:1.3rem;
+  }
+  .form-page h2 { font-family:var(--font-display); font-size:2.2rem; letter-spacing:-0.03em; margin-bottom:0.5rem; }
+  .form-page h2 em { color:var(--accent); font-style:italic; }
+  .form-page .sub { color:var(--muted); line-height:1.7; font-size:0.9rem; margin-bottom:0.5rem; }
+  .form-section-label {
+    font-family:var(--font-mono); font-size:0.68rem;
+    color:var(--accent); letter-spacing:0.18em; text-transform:uppercase;
+    margin:2rem 0 1rem; padding-bottom:0.45rem;
+    border-bottom:1px solid rgba(200,241,53,0.15);
+    display:flex; align-items:center; gap:0.7rem;
+  }
+  .form-section-label::before { content:''; width:18px; height:1px; background:var(--accent); flex-shrink:0; }
+  .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.2rem; }
+  .form-group { display:flex; flex-direction:column; gap:0.45rem; }
+  .form-group.full { grid-column:1/-1; }
+  .form-group label { font-family:var(--font-mono); font-size:0.68rem; color:var(--muted); letter-spacing:0.1em; text-transform:uppercase; }
+  .form-group input, .form-group textarea, .form-group select {
+    background:var(--bg3); border:1px solid var(--border);
+    border-radius:2px; padding:0.8rem 0.9rem;
+    color:var(--white); font-family:var(--font-sans); font-size:0.88rem;
+    transition:border-color 0.3s; outline:none;
+  }
+  .form-group input:focus, .form-group textarea:focus { border-color:var(--accent); }
+  .form-group textarea { resize:vertical; min-height:110px; }
+  .form-group select option { background:var(--bg3); }
+  .form-submit {
+    margin-top:1.8rem; width:100%; padding:1rem;
+    background:var(--accent); color:#000; border:none;
+    font-family:var(--font-mono); font-size:0.88rem; font-weight:700;
+    letter-spacing:0.05em; border-radius:2px; cursor:pointer;
+    transition:background 0.3s,transform 0.3s var(--transition);
+  }
+  .form-submit:hover { background:var(--accent2); transform:translateY(-2px); }
+  .form-footer-note { margin-top:0.9rem; font-family:var(--font-mono); font-size:0.68rem; color:var(--muted); text-align:center; }
+
+  /* SUCCESS */
+  #success-section {
+    display:none; min-height:100vh;
+    align-items:center; justify-content:center;
+    flex-direction:column; text-align:center; padding:4rem 5%;
+    background: var(--bg);
+  }
+  #success-section.active { display:flex; }
+  .success-icon {
+    width:76px; height:76px; border-radius:50%;
+    background:rgba(200,241,53,0.1); border:2px solid var(--accent);
+    display:flex; align-items:center; justify-content:center;
+    font-size:1.8rem; margin-bottom:1.8rem;
+    animation:pulse 2s ease-in-out infinite;
+  }
+  .success-title { font-family:var(--font-display); font-size:2.8rem; letter-spacing:-0.03em; margin-bottom:0.9rem; }
+  .success-sub { color:var(--muted); max-width:420px; line-height:1.75; margin-bottom:2.2rem; }
+
+  /* REVEAL */
+  .reveal { opacity:0; transform:translateY(36px); transition:opacity 0.8s var(--transition),transform 0.8s var(--transition); }
+  .reveal.visible { opacity:1; transform:none; }
+  .reveal-delay-1 { transition-delay:0.1s; }
+  .reveal-delay-2 { transition-delay:0.2s; }
+  .reveal-delay-3 { transition-delay:0.3s; }
+
+  /* TOAST */
+  .toast {
+    position:fixed; bottom:1.5rem; right:1.5rem;
+    background:var(--card); border:1px solid rgba(200,241,53,0.3);
+    border-radius:4px; padding:0.9rem 1.3rem;
+    font-family:var(--font-mono); font-size:0.76rem;
+    color:var(--accent); z-index:999;
+    transform:translateY(100px); opacity:0;
+    transition:all 0.4s var(--transition);
+    max-width:calc(100vw - 3rem);
+  }
+  .toast.show { transform:none; opacity:1; }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:none} }
+  @keyframes barGrow { from{width:0} }
+  @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+  @keyframes scan { from{top:0} to{top:100%} }
+  @keyframes pulse { 0%,100%{box-shadow:0 0 0 0 rgba(200,241,53,0.2)} 50%{box-shadow:0 0 0 18px rgba(200,241,53,0)} }
+
+  /* MOBILE */
+  @media(max-width:768px){
+    nav { padding:0.9rem 4%; }
+    .nav-links { display:none; }
+    .nav-links.open {
+      display:flex; flex-direction:column; position:fixed;
+      top:56px; left:0; right:0; background:rgba(10,10,10,0.97);
+      backdrop-filter:blur(20px); padding:1.5rem; gap:1.2rem;
+      border-bottom:1px solid var(--border);
+    }
+    .nav-hamburger { display:block; }
+    .nav-cta { display:none; }
+    #hero { padding:5.5rem 4% 3rem; min-height:auto; }
+    .hero-headline { font-size:clamp(2.4rem,9vw,3.5rem); }
+    .hero-sub { font-size:0.9rem; }
+    .hero-glow { display:none; }
+    .hero-stats { width:100%; flex-wrap:wrap; }
+    .stat-item { flex:1; min-width:120px; padding:0.9rem 1rem; }
+    .stat-num { font-size:1.6rem; }
+    .stat-label { font-size:0.58rem; }
+    section { padding:4rem 4%; }
+    .services-grid { grid-template-columns:1fr; }
+    .why-grid { grid-template-columns:1fr; gap:2.5rem; }
+    .why-visual { aspect-ratio:auto; min-height:280px; }
+    .pricing-grid { grid-template-columns:1fr; gap:1rem; }
+    .process-steps { grid-template-columns:1fr 1fr; gap:2rem; }
+    .process-steps::before { display:none; }
+    footer { flex-direction:column; text-align:center; gap:1.2rem; }
+    .footer-links { justify-content:center; }
+    .form-page { padding:4.5rem 4% 3rem; }
+    .form-grid { grid-template-columns:1fr; }
+  }
+  @media(max-width:480px){
+    .hero-headline { font-size:2.2rem; }
+    .hero-actions { flex-direction:column; }
+    .btn-primary,.btn-outline { text-align:center; }
+    .process-steps { grid-template-columns:1fr; }
+    .stat-item { min-width:100px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="toast" id="toast"></div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a class="logo" href="#" onclick="showMain();return false;">Sort<span class="hat">Hat</span>🎓</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#" onclick="navTo('services')">Services</a></li>
+    <li><a href="#" onclick="navTo('why')">Why Us</a></li>
+    <li><a href="#" onclick="navTo('pricing')">Pricing</a></li>
+    <li><a href="#" onclick="navTo('reviews')">Reviews</a></li>
+    <li><a href="#" onclick="navTo('process')">Process</a></li>
+  </ul>
+  <button class="nav-hamburger" id="hamburger" onclick="toggleNav()">☰</button>
+  <a href="#" class="nav-cta" onclick="navTo('pricing');return false;">Get Started →</a>
+</nav>
+
+<!-- MAIN SITE -->
+<div id="main-site">
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-tag">✦ Career Documents that Actually Work</div>
+    <h1 class="hero-headline">
+      Words that<br/><em>open doors.</em><br/>Documents that<br/>get you <em>hired.</em>
+    </h1>
+    <p class="hero-sub">
+      Professional resumes, cover letters &amp; personal statements crafted by experts — ATS-optimized, company-verified, and built to land interviews.<br/><br/>
+      <strong>No upfront payment. Pay only after you're satisfied.</strong>
+    </p>
+    <div class="hero-actions">
+      <a href="#" class="btn-primary" onclick="navTo('pricing');return false;">View Pricing Plans</a>
+      <a href="#" class="btn-outline" onclick="navTo('services');return false;">Explore Services</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item"><div class="stat-num">2,400+</div><div class="stat-label">Resumes Crafted</div></div>
+      <div class="stat-item"><div class="stat-num">96%</div><div class="stat-label">Interview Rate</div></div>
+      <div class="stat-item"><div class="stat-num">ATS</div><div class="stat-label">100% Compatible</div></div>
+      <div class="stat-item"><div class="stat-num">48h</div><div class="stat-label">Turnaround</div></div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="section-label">What We Do</div>
+    <h2 class="section-title reveal">Expert Career <em>Documents</em></h2>
+    <div class="services-grid">
+      <div class="service-card reveal reveal-delay-1">
+        <span class="service-num">01</span><span class="service-icon">📄</span>
+        <h3>Resume Writing</h3>
+        <p>Professionally crafted resumes in ATS-friendly formats, verified against top company requirements. Keyword-optimized for your target role.</p>
+        <span class="service-tag">ATS Optimized</span>
+      </div>
+      <div class="service-card reveal reveal-delay-2">
+        <span class="service-num">02</span><span class="service-icon">✉️</span>
+        <h3>Cover Letters</h3>
+        <p>Compelling, personalized cover letters that complement your resume and speak directly to the hiring manager.</p>
+        <span class="service-tag">Personalized</span>
+      </div>
+      <div class="service-card reveal reveal-delay-3">
+        <span class="service-num">03</span><span class="service-icon">🎓</span>
+        <h3>Personal Statements</h3>
+        <p>Powerful statements for university applications that authentically showcase your journey, goals, and potential.</p>
+        <span class="service-tag">University Ready</span>
+      </div>
+      <div class="service-card reveal reveal-delay-1">
+        <span class="service-num">04</span><span class="service-icon">📝</span>
+        <h3>Statement of Purpose</h3>
+        <p>Research-backed SOPs for grad school applications — tailored to your program, supervisor, and career objectives.</p>
+        <span class="service-tag">Grad School</span>
+      </div>
+      <div class="service-card reveal reveal-delay-2">
+        <span class="service-num">05</span><span class="service-icon">🔧</span>
+        <h3>Resume Tailoring</h3>
+        <p>We tailor your existing resume to any specific job description — maximizing keyword match and relevance.</p>
+        <span class="service-tag">Job Specific</span>
+      </div>
+      <div class="service-card reveal reveal-delay-3">
+        <span class="service-num">06</span><span class="service-icon">💼</span>
+        <h3>LinkedIn Optimization</h3>
+        <p>Full LinkedIn profile overhaul aligned with your resume — headline, summary, experience all crafted to attract recruiters.</p>
+        <span class="service-tag">Coming Soon</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY US -->
+  <section id="why">
+    <div class="section-label">Why SortHat</div>
+    <div class="why-grid">
+      <div>
+        <h2 class="section-title reveal">The <em>unfair</em> advantage you deserve</h2>
+        <ul class="why-list" style="margin-top:2rem">
+          <li>
+            <div class="why-icon">🎯</div>
+            <div><h4>Company-Verified Formats</h4><p>Our templates are tested and verified against actual hiring portals at top Indian and global companies.</p></div>
+          </li>
+          <li>
+            <div class="why-icon">🤖</div>
+            <div><h4>100% ATS Compatibility</h4><p>Every document passes ATS screening tools before delivery. No rejections at the machine gate.</p></div>
+          </li>
+          <li>
+            <div class="why-icon">⚡</div>
+            <div><h4>Fast Turnaround</h4><p>Standard delivery in 48 hours. Express option available for urgent applications.</p></div>
+          </li>
+          <li>
+            <div class="why-icon">🔄</div>
+            <div><h4>Free Revisions</h4><p>Not 100% satisfied? We revise until you love it. Unlimited tweaks within the project scope.</p></div>
+          </li>
+        </ul>
+      </div>
+      <div class="why-visual reveal reveal-delay-2">
+        <div class="scan-line"></div>
+        <div class="resume-preview">
+          <div class="rp-name">Arjun Mehta</div>
+          <div class="rp-role">Software Engineer — Full Stack</div>
+          <div style="color:rgba(255,255,255,0.3);font-size:0.6rem">arjun@email.com · LinkedIn</div>
+          <div class="rp-section">
+            <div class="rp-section-title">Skills Match</div>
+            <div style="display:flex;justify-content:space-between;font-size:0.6rem;margin-bottom:2px;"><span>React.js</span><span style="color:var(--accent)">98%</span></div>
+            <div class="rp-bar"><div class="rp-bar-fill" style="width:98%"></div></div>
+            <div style="display:flex;justify-content:space-between;font-size:0.6rem;margin-top:5px;margin-bottom:2px;"><span>Node.js</span><span style="color:var(--accent)">94%</span></div>
+            <div class="rp-bar"><div class="rp-bar-fill" style="width:94%"></div></div>
+            <div style="display:flex;justify-content:space-between;font-size:0.6rem;margin-top:5px;margin-bottom:2px;"><span>System Design</span><span style="color:var(--accent)">88%</span></div>
+            <div class="rp-bar"><div class="rp-bar-fill" style="width:88%"></div></div>
+          </div>
+          <div class="rp-section">
+            <div class="rp-section-title">ATS Score</div>
+            <div style="font-size:1.8rem;font-family:var(--font-display);color:var(--accent);margin-top:0.25rem">97 / 100</div>
+            <div style="font-size:0.58rem;color:var(--muted);margin-top:0.15rem">Excellent · Ready to Submit</div>
+          </div>
+        </div>
+        <div class="ats-badge">✓ ATS Verified</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing">
+    <div class="section-label">Plans &amp; Pricing</div>
+    <div class="pricing-intro">
+      <h2 class="section-title reveal">Simple, <em>transparent</em> pricing</h2>
+      <p>No hidden fees. No subscriptions. Pay once, get a document that works.<br/>
+        <strong style="color:var(--accent)">No upfront payment — you only pay after you're satisfied.</strong>
+      </p>
+    </div>
+    <div class="pricing-grid">
+      <div class="plan-card reveal reveal-delay-1">
+        <div class="plan-tier">Tier 01</div>
+        <div class="plan-name">Classic</div>
+        <div class="plan-desc">Everything you need to land your first interview. A clean, ATS-optimized resume.</div>
+        <div class="plan-price"><span class="plan-currency">₹</span><span class="plan-amount">299</span></div>
+        <div class="plan-note">One-time · 72h delivery</div>
+        <div class="plan-note accent">No upfront payment · Pay after delivery</div>
+        <ul class="plan-features">
+          <li>Professional Resume (1 page)</li><li>ATS-Optimized Format</li>
+          <li>Company-Verified Template</li><li>Keyword-Rich Content</li>
+          <li>2 Free Revisions</li><li class="cross">Cover Letter</li>
+          <li class="cross">Job-Specific Tailoring</li>
+        </ul>
+        <button class="plan-cta outline" onclick="selectPlan('Classic','299','career')">Choose Classic →</button>
+      </div>
+      <div class="plan-card featured reveal reveal-delay-2">
+        <div class="plan-tier">Tier 02</div>
+        <div class="plan-name">Silver</div>
+        <div class="plan-desc">The complete package. Resume + Cover Letter for a strong, cohesive application.</div>
+        <div class="plan-price"><span class="plan-currency">₹</span><span class="plan-amount">499</span></div>
+        <div class="plan-note">One-time · 72h delivery</div>
+        <div class="plan-note accent">No upfront payment · Pay after delivery</div>
+        <ul class="plan-features">
+          <li>Professional Resume (1–2 pages)</li><li>ATS-Optimized Format</li>
+          <li>Company-Verified Template</li><li>Personalized Cover Letter</li>
+          <li>Keyword-Rich Content</li><li>3 Free Revisions</li>
+          <li class="cross">Job-Specific Tailoring</li>
+        </ul>
+        <button class="plan-cta filled" onclick="selectPlan('Silver','499','career')">Choose Silver →</button>
+      </div>
+      <div class="plan-card reveal reveal-delay-3">
+        <div class="plan-tier">Tier 03</div>
+        <div class="plan-name">Platinum</div>
+        <div class="plan-desc">The ultimate edge. Fully tailored resume + cover letter for your specific target role.</div>
+        <div class="plan-price"><span class="plan-currency">₹</span><span class="plan-amount">899</span></div>
+        <div class="plan-note">One-time · 48h delivery</div>
+        <div class="plan-note accent">No upfront payment · Pay after delivery</div>
+        <ul class="plan-features">
+          <li>Premium Resume (1–2 pages)</li><li>ATS-Optimized Format</li>
+          <li>Company-Verified Template</li><li>Personalized Cover Letter</li>
+          <li>Job-Specific Tailoring</li><li>LinkedIn Summary (Bonus)</li>
+          <li>Unlimited Revisions</li>
+        </ul>
+        <button class="plan-cta outline" onclick="selectPlan('Platinum','899','career')">Choose Platinum →</button>
+      </div>
+      <div class="plan-card reveal reveal-delay-3" style="border-color:rgba(241,193,53,0.4);background:linear-gradient(180deg,rgba(241,193,53,0.05),var(--card))">
+        <div class="plan-tier" style="color:var(--accent2)">Study Abroad</div>
+        <div class="plan-name" style="font-size:1.4rem">Global Scholar</div>
+        <div class="plan-desc">The complete study-abroad kit — crafted for students aiming at top global universities.</div>
+        <div class="plan-price"><span class="plan-currency">₹</span><span class="plan-amount" style="color:var(--accent2)">1999</span></div>
+        <div class="plan-note">One-time · 96h delivery</div>
+        <div class="plan-note" style="color:var(--accent2);margin-bottom:1.5rem;">No upfront payment · Pay after delivery</div>
+        <ul class="plan-features">
+          <li>ATS Resume (Academic Format)</li><li>University-Specific Essays</li>
+          <li>Tailored Personal Statement</li><li>Statement of Purpose (SOP)</li>
+          <li>Recommendation Letter Drafts</li><li>Motivation Letter</li>
+          <li>Unlimited Revisions</li>
+        </ul>
+        <button class="plan-cta outline" style="border-color:rgba(241,193,53,0.4);color:var(--accent2)" onclick="selectPlan('Global Scholar','1999','abroad')">Choose Global Scholar →</button>
+      </div>
+    </div>
+    <p class="reveal" style="margin-top:1.8rem;text-align:center;font-family:var(--font-mono);font-size:0.72rem;color:var(--muted)">
+      💬 Need something custom? <a href="mailto:hello@sorthat.in" style="color:var(--accent);text-decoration:none">Contact us</a> for bulk or bespoke orders.
+    </p>
+  </section>
+
+  <!-- PROCESS -->
+  <section id="process">
+    <div class="section-label">How It Works</div>
+    <h2 class="section-title reveal">From order to <em>offer letter</em></h2>
+    <div class="process-steps">
+      <div class="process-step"><div class="step-num">01</div><h4>Choose Your Plan</h4><p>Pick Classic, Silver, or Platinum based on what you need.</p></div>
+      <div class="process-step"><div class="step-num">02</div><h4>Fill the Form</h4><p>Share your career details, goals, and any existing documents.</p></div>
+      <div class="process-step"><div class="step-num">03</div><h4>We Get to Work</h4><p>Our writers craft your document and run ATS checks.</p></div>
+      <div class="process-step"><div class="step-num">04</div><h4>You Get Hired</h4><p>Receive your polished documents and start applying with confidence.</p></div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section id="reviews">
+    <div class="section-label">Testimonials</div>
+    <div class="reviews-header">
+      <h2 class="section-title reveal">What our<br/><em>clients say</em></h2>
+      <div class="reveal">
+        <div style="font-family:var(--font-display);font-size:2.8rem;color:var(--accent);text-align:right">4.9</div>
+        <div class="review-stars" style="justify-content:flex-end">★★★★★</div>
+        <div style="font-family:var(--font-mono);font-size:0.68rem;color:var(--muted)">Based on 340+ reviews</div>
+      </div>
+    </div>
+    <div class="reviews-track-wrapper">
+      <div class="reviews-track" id="reviewsTrack"></div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-brand">Sort<span class="hat">Hat</span>🎓</div>
+    <ul class="footer-links">
+      <li><a href="#" onclick="navTo('services')">Services</a></li>
+      <li><a href="#" onclick="navTo('pricing')">Pricing</a></li>
+      <li><a href="#" onclick="navTo('reviews')">Reviews</a></li>
+      <li><a href="mailto:hello@sorthat.in">Contact</a></li>
+    </ul>
+    <div class="footer-copy">© 2025 SortHat. All rights reserved.</div>
+  </footer>
+</div>
+
+<!-- CAREER FORM -->
+<div id="order-section" class="form-page">
+  <div class="form-container">
+    <button class="back-btn" onclick="showMain()">← Back to Plans</button>
+    <div class="order-plan-badge" id="orderPlanBadge">✦ Selected Plan: —</div>
+    <h2>Tell us about <em>yourself</em></h2>
+    <p class="sub">Fill in your details — the more you share, the better your document will be.</p>
+    <div class="form-section-label">Personal Information</div>
+    <div class="form-grid">
+      <div class="form-group"><label>Full Name *</label><input type="text" id="fname" placeholder="Arjun Mehta" required/></div>
+      <div class="form-group"><label>Age *</label><input type="number" id="fage" placeholder="22" min="10" max="60"/></div>
+      <div class="form-group"><label>Phone Number *</label><input type="tel" id="fphone" placeholder="+91 98765....." required></div>
+      <div class="form-group"><label>Email Address *</label><input type="email" id="femail" placeholder="arjun@email.com" required></div>
+    </div>
+    <div class="form-section-label">Education</div>
+    <div class="form-grid">
+      <div class="form-group full"><label>Secondary School Name &amp; Marks / Percentage</label><input type="text" id="fsecondary"/></div>
+      <div class="form-group full"><label>University Name &amp; Undergraduate GPA / Percentage</label><input type="text" id="fundergrad"/></div>
+      <div class="form-group full"><label>University Name &amp; Postgraduate GPA (if any)</label><input type="text" id="fpostgrad"/></div>
+    </div>
+    <div class="form-section-label">Background &amp; Experience</div>
+    <div class="form-grid">
+      <div class="form-group full"><label>Work Experience</label><textarea id="fwork"></textarea></div>
+      <div class="form-group full"><label>Projects</label><textarea id="fprojects" placeholder="Title, Tech Stack, What you built, Impact..."></textarea></div>
+      <div class="form-group full"><label>Skills</label><input type="text" id="fskills"/></div>
+      <div class="form-group full"><label>Courses &amp; Certifications</label><textarea id="fcourses" placeholder="e.g. AWS Certified Developer (2023)..."></textarea></div>
+      <div class="form-group full"><label>Interests &amp; Hobbies</label><input type="text" id="fhobbies" placeholder="e.g. Chess, Photography, Open Source..."/></div>
+    </div>
+    <div class="form-section-label">Your Goal</div>
+    <div class="form-grid">
+      <div class="form-group full"><label>Target Role / Company</label><input type="text" id="ftarget" placeholder="Software Engineer at Google"/></div>
+    </div>
+    <button class="form-submit" onclick="submitCareerForm()">Submit &amp; Proceed — ₹<span id="orderAmount">—</span></button>
+    <p class="form-footer-note">🔒 Your data is safe with us · We will contact you within 24 hours</p>
+  </div>
+</div>
+
+<!-- GLOBAL SCHOLAR FORM -->
+<div id="scholar-section" class="form-page">
+  <div class="form-container">
+    <button class="back-btn" onclick="showMain()">← Back to Plans</button>
+    <div class="order-plan-badge" style="border-color:rgba(241,193,53,0.3);color:var(--accent2)">✦ Global Scholar Plan — ₹1999</div>
+    <h2 style="font-family:var(--font-display);font-size:2.2rem;letter-spacing:-0.03em;">Your Study Abroad <em style="color:var(--accent2)">Profile</em></h2>
+    <p class="sub">Share your academic journey and ambitions — we'll craft documents that open doors to the world's best universities.</p>
+    <div class="form-section-label" style="color:var(--accent2);border-color:rgba(241,193,53,0.15)">Personal Information</div>
+    <div class="form-grid">
+      <div class="form-group"><label>Full Name *</label><input type="text" id="sname" placeholder="Priya Sharma"/></div>
+      <div class="form-group"><label>Age *</label><input type="number" id="sage" placeholder="17" min="10" max="30"/></div>
+      <div class="form-group"><label>Phone Number *</label><input type="tel" id="sphone" placeholder="+91 98765....."/></div>
+      <div class="form-group"><label>Email Address *</label><input type="email" id="semail" placeholder="priya@email.com"/></div>
+    </div>
+    <div class="form-section-label" style="color:var(--accent2);border-color:rgba(241,193,53,0.15)">Academic Background</div>
+    <div class="form-grid">
+      <div class="form-group full"><label>Current Class / Year of Study</label><input type="text" id="sclass" placeholder="e.g. Grade 12 (IB), Second Year B.Tech"/></div>
+      <div class="form-group full"><label>Secondary School Percentage / Predicted Grades</label><input type="text" id="smarks" placeholder="e.g. Class 10 — 95.4% (CBSE)"/></div>
+    </div>
+    <div class="form-section-label" style="color:var(--accent2);border-color:rgba(241,193,53,0.15)">University Goals</div>
+    <div class="form-grid">
+      <div class="form-group full"><label>Universities You Are Aiming For</label><input type="text" id="suniversities" placeholder="e.g. University of Toronto, NUS Singapore..."/></div>
+      <div class="form-group full"><label>Courses / Programs You Are Aiming For</label><input type="text" id="scourses" placeholder="e.g. BSc Computer Science..."/></div>
+      <div class="form-group full"><label>Countries You Are Targeting</label><input type="text" id="scountries" placeholder="e.g. Canada, Singapore, UK..."/></div>
+      <div class="form-group full"><label>Application Portals in Mind</label><textarea id="sapplications" placeholder="e.g. UCAS (UK), Common App (US)..."></textarea></div>
+    </div>
+    <div class="form-section-label" style="color:var(--accent2);border-color:rgba(241,193,53,0.15)">Activities &amp; Experience</div>
+    <div class="form-grid">
+      <div class="form-group full"><label>Extracurriculars</label><textarea id="sextracurricular" placeholder="e.g. Debate team captain, MUN delegate..."></textarea></div>
+      <div class="form-group full"><label>Work Experience</label><textarea id="swork" placeholder="e.g. Internship at XYZ firm (Summer 2024)..."></textarea></div>
+      <div class="form-group full"><label>Volunteering Work</label><textarea id="svolunteer" placeholder="e.g. Taught underprivileged children (NGO)..."></textarea></div>
+      <div class="form-group full"><label>Certifications &amp; Value-Added Courses</label><textarea id="svaluecourses" placeholder="e.g. Harvard CS50, IELTS 7.5..."></textarea></div>
+    </div>
+    <button class="form-submit" style="background:var(--accent2)" onclick="submitScholarForm()">Submit &amp; Proceed — ₹1999</button>
+    <p class="form-footer-note">🔒 Your data is safe with us · We will contact you within 24 hours</p>
+  </div>
+</div>
+
+<!-- SUCCESS -->
+<div id="success-section">
+  <div class="success-icon">✅</div>
+  <h1 class="success-title">Order <em style="color:var(--accent)">Confirmed!</em></h1>
+  <p class="success-sub">Thank you! We've received your details. Our team will reach out within 24 hours to get started on your document.</p>
+  <button class="btn-primary" onclick="showMain()">← Back to Home</button>
+</div>
+
+<script>
+// ── STATE
+let selectedPlan = {name:'',price:'',type:''};
+
+// Form submissions are handled via Formspree.
+// The endpoint is loaded from an environment variable and injected at build time.
+// See .env.example for the required variable: FORMSPREE_ENDPOINT
+const FORMSPREE_ENDPOINT = window.ENV_FORMSPREE_ENDPOINT || '';
+
+// ── NAV
+window.addEventListener('scroll',()=>{
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+});
+
+function toggleNav(){
+  document.getElementById('navLinks').classList.toggle('open');
+}
+
+function navTo(id){
+  document.getElementById('navLinks').classList.remove('open');
+  showMain();
+  setTimeout(()=>{ const el=document.getElementById(id); if(el) el.scrollIntoView({behavior:'smooth'}); }, 50);
+}
+
+// ── PAGE SWITCHING
+function showMain(){
+  document.getElementById('main-site').style.display = 'block';
+  ['order-section','scholar-section','success-section'].forEach(id=>document.getElementById(id).classList.remove('active'));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function showFormPage(type){
+  document.getElementById('main-site').style.display = 'none';
+  ['order-section','scholar-section','success-section'].forEach(id=>document.getElementById(id).classList.remove('active'));
+  document.getElementById(type==='career'?'order-section':'scholar-section').classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function showSuccess(){
+  document.getElementById('main-site').style.display = 'none';
+  ['order-section','scholar-section'].forEach(id=>document.getElementById(id).classList.remove('active'));
+  document.getElementById('success-section').classList.add('active');
+  window.scrollTo(0,0);
+}
+
+// ── PLAN SELECTION
+function selectPlan(name,price,type){
+  selectedPlan = {name,price,type};
+  if(type==='abroad'){
+    showFormPage('scholar');
+  } else {
+    document.getElementById('orderPlanBadge').textContent = `✦ Selected Plan: ${name} — ₹${price}`;
+    document.getElementById('orderAmount').textContent = price;
+    showFormPage('career');
+  }
+  showToast(`${name} plan selected ✦`);
+}
+
+// ── FORM SUBMISSION
+async function postToFormspree(payload){
+  if(!FORMSPREE_ENDPOINT){
+    console.warn('FORMSPREE_ENDPOINT not configured. Set window.ENV_FORMSPREE_ENDPOINT before submitting.');
+    throw new Error('Form endpoint not configured');
+  }
+  const response = await fetch(FORMSPREE_ENDPOINT,{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Accept':'application/json'},
+    body:JSON.stringify(payload)
+  });
+  if(!response.ok) throw new Error('Form submission failed');
+}
+
+async function submitCareerForm(){
+  const name=document.getElementById('fname').value.trim();
+  const age=document.getElementById('fage').value.trim();
+  const phone=document.getElementById('fphone').value.trim();
+  const email=document.getElementById('femail').value.trim();
+  if(!name||!age||!phone||!email){ showToast('⚠ Please fill Name, Age, Phone & Email'); return; }
+
+  const data={
+    formType:'Career Order', plan:selectedPlan.name, price:selectedPlan.price,
+    name, age, phone, email,
+    secondary:document.getElementById('fsecondary').value,
+    undergrad:document.getElementById('fundergrad').value,
+    postgrad:document.getElementById('fpostgrad').value,
+    work:document.getElementById('fwork').value,
+    projects:document.getElementById('fprojects').value,
+    skills:document.getElementById('fskills').value,
+    courses:document.getElementById('fcourses').value,
+    hobbies:document.getElementById('fhobbies').value,
+    target:document.getElementById('ftarget').value,
+  };
+
+  const btn=document.querySelector('#order-section .form-submit');
+  btn.disabled=true; btn.textContent='Submitting...';
+  try{
+    await postToFormspree(data);
+    showToast('Submitted successfully'); showSuccess();
+  }catch(err){
+    console.error(err); showToast('Submission failed. Please try again.');
+  }finally{
+    btn.disabled=false;
+    btn.innerHTML='Submit &amp; Proceed — ₹<span id="orderAmount">'+(selectedPlan.price||'—')+'</span>';
+  }
+}
+
+async function submitScholarForm(){
+  const name=document.getElementById('sname').value.trim();
+  const age=document.getElementById('sage').value.trim();
+  const phone=document.getElementById('sphone').value.trim();
+  const email=document.getElementById('semail').value.trim();
+  if(!name||!age||!phone||!email){ showToast('⚠ Please fill Name, Age, Phone & Email'); return; }
+
+  const data={
+    plan:'Global Scholar', price:'1999',
+    name, age, phone, email,
+    currentClass:document.getElementById('sclass').value,
+    marks:document.getElementById('smarks').value,
+    universities:document.getElementById('suniversities').value,
+    courses:document.getElementById('scourses').value,
+    countries:document.getElementById('scountries').value,
+    applications:document.getElementById('sapplications').value,
+    extracurricular:document.getElementById('sextracurricular').value,
+    work:document.getElementById('swork').value,
+    volunteer:document.getElementById('svolunteer').value,
+    valueCourses:document.getElementById('svaluecourses').value,
+  };
+
+  const btn=document.querySelector('#scholar-section .form-submit');
+  btn.disabled=true; btn.textContent='Submitting...';
+  try{
+    await postToFormspree(data); showToast('Submitted successfully'); showSuccess();
+  }catch(err){
+    console.error(err); showToast('Submission failed. Please try again.');
+  }finally{
+    btn.disabled=false; btn.textContent='Submit & Proceed — ₹1999';
+  }
+}
+
+// ── TOAST
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+// ── SCROLL REVEAL
+const revealObserver=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+},{threshold:0.1});
+document.querySelectorAll('.reveal,.why-list li,.process-step').forEach(el=>revealObserver.observe(el));
+
+// ── REVIEWS DATA
+const reviews=[
+  {name:'Priya S.',role:'Software Engineer at Infosys',plan:'Silver',text:'I got 3 interview calls within a week of sending out my SortHat resume. The formatting was clean and the content hit all the right notes.',stars:5,init:'P'},
+  {name:'Rohan K.',role:'MBA — IIM Lucknow',plan:'Platinum',text:'My SOP was transformed completely. The Platinum plan was worth every rupee — tailored perfectly for my program.',stars:5,init:'R'},
+  {name:'Sneha M.',role:'Product Manager at Razorpay',plan:'Silver',text:'Honestly the best investment in my job search. The cover letter felt like it was written specifically for Razorpay. Got the offer!',stars:5,init:'S'},
+  {name:'Aditya T.',role:'Data Scientist at TCS',plan:'Classic',text:'Quick turnaround and great quality. The ATS score on my resume jumped from 62 to 94. Classic plan is a steal at ₹299.',stars:5,init:'A'},
+  {name:'Neha R.',role:'MS in CS — Georgia Tech',plan:'Platinum',text:'My SOP went through 2 revisions and both times the team was super responsive. Got admits from 3 of my 5 target schools!',stars:5,init:'N'},
+  {name:'Karan B.',role:'Marketing Lead at Swiggy',plan:'Silver',text:'The cover letter was incredibly well written — personal, professional, and punchy. Highly recommend.',stars:4,init:'K'},
+  {name:'Anjali D.',role:'HR Manager — Deloitte',plan:'Classic',text:'From an HR perspective, this resume would definitely pass our screening. The formatting and keyword density were spot on.',stars:5,init:'A'},
+  {name:'Vivek P.',role:'Backend Eng. at Flipkart',plan:'Platinum',text:'Had a very specific JD in mind and the team nailed every keyword. Passed the ATS and got a call the same week.',stars:5,init:'V'},
+];
+
+const track=document.getElementById('reviewsTrack');
+[...reviews,...reviews].forEach(r=>{
+  const stars='★'.repeat(r.stars)+'☆'.repeat(5-r.stars);
+  const card=document.createElement('div');
+  card.className='review-card';
+  card.innerHTML=`
+    <div class="review-stars">${stars}</div>
+    <p class="review-text">"${r.text}"</p>
+    <div class="review-author">
+      <div class="review-avatar">${r.init}</div>
+      <div><div class="review-name">${r.name}</div><div class="review-role">${r.role}</div></div>
+      <div class="review-plan">${r.plan}</div>
+    </div>`;
+  track.appendChild(card);
+});
+
+document.querySelectorAll('a[href="#"]').forEach(a=>a.addEventListener('click',e=>e.preventDefault()));
+</script>
+</body>
+</html>
