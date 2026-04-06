@@ -16,14 +16,6 @@ Built it to practice proper UI without relying on a framework. No React, no buil
 
 ![Hero](https://github.com/aarishahmad/sort-hat-website/blob/main/Screenshot%202026-04-06%20110001.png)
 
-![Services](public/screenshots/services.png)
-
-![Pricing](public/screenshots/pricing.png)
-
-![Process & Reviews](public/screenshots/process.png)
-
----
-
 ## Stack
 
 - Vanilla HTML, CSS, JS — no framework, no build step
